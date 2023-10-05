@@ -43,7 +43,7 @@ public class GameTest {
     @Test
     public void testShuffle() {
         solver = new GameSolver(boardForShuffleCase);
-        solver.shuffle();
+        solver.shuffleWithRandom();
         assertNotEquals(solver.board, boardForTestCase);
     }
 

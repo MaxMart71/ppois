@@ -21,7 +21,7 @@ class GameSolver {
     /**
      * Finds the row and column indices of the empty space on the game board.
      */
-    private void findEmptyCell(int[][] board) {
+    private void findEmptyCell() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (this.board[i][j] == 0) {
@@ -35,7 +35,7 @@ class GameSolver {
     /**
      * Shuffles the tiles on the game board using Fisher-Yates algorithm
      */
-    public void shuffle() {
+    public void shuffleWithRandom() {
         Random random = new Random();
         for (int i = board.length - 1; i > 0; i--) {
             for (int j = board[i].length - 1; j > 0; j--) {
@@ -53,7 +53,7 @@ class GameSolver {
      *  Moves the tile below the empty space one position up if possible
      */
     public void caseUp(){
-        findEmptyCell(board);
+        findEmptyCell();
         if (emptyRow < 3){
             board[emptyRow][emptyCol] =  board[emptyRow+1][emptyCol];
             board[emptyRow+1][emptyCol] = 0;
@@ -66,7 +66,7 @@ class GameSolver {
     /**
      *  Moves the tile above the empty space one position down if possible.
      */public void caseDown(){
-        findEmptyCell(board);
+        findEmptyCell();
         if (emptyRow > 0){
             board[emptyRow][emptyCol] =  board[emptyRow-1][emptyCol];
             board[emptyRow-1][emptyCol] = 0;
@@ -81,7 +81,7 @@ class GameSolver {
      * Moves the tile to the right of the empty space one position left if possible.
      */
     public void caseLeft(){
-        findEmptyCell(board);
+        findEmptyCell();
         if (emptyCol < 3){
             board[emptyRow][emptyCol] =  board[emptyRow][emptyCol+1];
             board[emptyRow][emptyCol+1] = 0;
@@ -94,7 +94,7 @@ class GameSolver {
      * Moves the tile to the left of the empty space one position right if possible.
      */
     public void caseRight(){
-        findEmptyCell(board);
+        findEmptyCell();
         if (emptyCol > 0){
             board[emptyRow][emptyCol] =  board[emptyRow][emptyCol-1];
             board[emptyRow][emptyCol-1] = 0;
@@ -170,4 +170,12 @@ class GameSolver {
             System.out.println();
         }
     }
+    public boolean shuffle(){
+        this.shuffleWithRandom();
+        while(!this.isSolvable()){
+            this.shuffleWithRandom();
+        }
+        return true;
+    }
+
 }
