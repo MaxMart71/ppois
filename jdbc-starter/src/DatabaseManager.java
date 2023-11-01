@@ -1,3 +1,5 @@
+import org.junit.runner.Request;
+
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -41,7 +43,7 @@ public class DatabaseManager {
     * @param car the car that we want to add
     **/
     public void addNewCar(Car car) {
-        String query = "INSERT INTO car (car_id, carname, price_per_hour, vehicle_type) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO car (id, carname, price_per_hour, type) VALUES (?, ?, ?, ?)";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             st.setString(1, car.getCarId());
@@ -60,7 +62,7 @@ public class DatabaseManager {
     * @param carId the number of the car we want to delete
     * */
     public void deleteCar(String carId) {
-        String query = "DELETE FROM car WHERE car_id = ?";
+        String query = "DELETE FROM car WHERE id = ?";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             st.setString(1, carId);
@@ -88,7 +90,7 @@ public class DatabaseManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return -1;
+        return 0;
     }
     /*
      *Getting password from database by username
@@ -111,6 +113,22 @@ public class DatabaseManager {
         }
         return null;
     }
+    public String getCarnameByCarId(String car_id){
+        String query = "SELECT carname FROM car WHERE id = ?";
+        try (Connection con = ConnectionManager.open();
+             PreparedStatement st = con.prepareStatement(query)) {
+            st.setString(1, car_id);
+
+            try (ResultSet resultSet = st.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error when retrieving user password", e);
+        }
+        return null;
+    }
     /*
     * Getting all available cars
     * @return names car_names that are available
@@ -119,15 +137,24 @@ public class DatabaseManager {
         List<String> names = new ArrayList<>();
         System.out.println("\nHere are our available cars, type the car ID to rent the car:");
         String query = """
-                SELECT carname FROM car
-                WHERE person_id IS NULL
+                SELECT carname FROM car;
                 """;
+        String query_for_check = "SELECT car_id FROM rent";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             try (ResultSet resultSet = st.executeQuery()) {
                 while (resultSet.next()) {
                     names.add(resultSet.getString("carname"));
                 }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try (Connection con = ConnectionManager.open();
+        PreparedStatement st = con.prepareStatement(query_for_check)) {
+            ResultSet resultSet = st.executeQuery();
+            while (resultSet.next()){
+                names.remove(getCarnameByCarId(resultSet.getString("car_id")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -155,7 +182,7 @@ public class DatabaseManager {
         return null;
     }
     public int getUserIdByCarId(String car_id){
-        String query = "SELECT person_id FROM car WHERE car_id = ?";
+        String query = "SELECT person_id FROM rent WHERE car_id = ?";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             st.setString(1, car_id);
@@ -174,19 +201,11 @@ public class DatabaseManager {
     * @param car_id , person_id
     * */
     public void rentCar(String car_id, int person_id){
-        String query = "UPDATE car SET person_id = ? WHERE car_id = ?";
-        String query_for_rent = "INSERT INTO rent (car_id, was_rented_date) VALUES (?, NOW())";
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement st = con.prepareStatement(query)) {
-            st.setInt(1, person_id);
-            st.setString(2, car_id);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String query_for_rent = "INSERT INTO rent (car_id,person_id, was_rented_date) VALUES (?, ?, NOW())";
         try (Connection con = ConnectionManager.open();
         PreparedStatement st = con.prepareStatement(query_for_rent)) {
             st.setString(1, car_id);
+            st.setInt(2, person_id);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error when adding information in rent table", e);
@@ -197,7 +216,7 @@ public class DatabaseManager {
     * @param car_id
     * @return price_per_hour*/
     public int getPricePerHourByCarId(String car_id) {
-        String query = "SELECT price_per_hour FROM car WHERE car_id = ?";
+        String query = "SELECT price_per_hour FROM car WHERE id = ?";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             st.setString(1, car_id);
@@ -264,16 +283,6 @@ public class DatabaseManager {
     }
     /*
     * Method that removes user form car table*/
-    private void forReturnCar(String car_id) {
-        String query = "UPDATE car SET person_id = NULL WHERE car_id = ?";
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement st = con.prepareStatement(query)) {
-            st.setString(1, car_id);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public Timestamp getWasReturnDateByCarId(String car_id){
         String query = "SELECT was_return_date FROM rent WHERE car_id = ?";
         try (Connection con = ConnectionManager.open();
@@ -294,8 +303,7 @@ public class DatabaseManager {
     * Returning the car by the user
     * @param car_id
     * @return NOW() - was_rented_date*/
-    public long returnCar(String car_id){
-        forReturnCar(car_id);
+    public void returnCar(String car_id){
         String query = "UPDATE rent SET was_return_date = NOW() WHERE car_id = ?";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
@@ -304,7 +312,6 @@ public class DatabaseManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return 0;
     }
     /*
     * Method that checks if this username is in database or not
@@ -327,13 +334,29 @@ public class DatabaseManager {
         return false;
     }
     public void deleteAfterTest() {
-        String query = "TRUNCATE car CASCADE; TRUNCATE person";
+        String query = "TRUNCATE rent CASCADE";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public int getPersonId(User user) {
+        String query = "SELECT id FROM person WHERE email = ?";
+        try (Connection con = ConnectionManager.open();
+             PreparedStatement st = con.prepareStatement(query)) {
+            st.setString(1,  user.getEmail());
+
+            try (ResultSet resultSet = st.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("id");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
 }

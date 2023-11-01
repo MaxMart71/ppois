@@ -19,11 +19,8 @@ public class Person {
     public Person(String username, String password, String email) {
         this(0, username, password, email);
     }
+    public Person(String username, String password){this(0,username,password, "admin@gmail.com");}
 
-    public Person(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
     /*
     * Method that gets user_id from the database be the email
     * return id userId*/
@@ -41,7 +38,7 @@ public class Person {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return -1;
+        return 0;
     }
 
 

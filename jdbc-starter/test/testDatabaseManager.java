@@ -9,8 +9,8 @@ public class testDatabaseManager {
     private final DatabaseManager db = new DatabaseManager();
     private final Admin admin = new Admin("admin", "admin");
 
-    private final User user = new User("test1", "qW3*yu", "max@gmail.com");
-    private final Car car = new Car("7230PO-1", "audi", 15, "electrocar");
+    private final User user = new User("test", "qW3*yuIh", "maxim@gmail.com");
+    private final Car car = new Car("4567TR-1", "audi", 15, "electrocar");
 
 
     @Test

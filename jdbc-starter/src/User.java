@@ -22,7 +22,7 @@ public class User extends Person{
     /*
     * Method that shows all types of cars*/
     public static boolean getALlTypesOfCars(){
-        List<String> types = Car.getTypes();
+        CarTypes[] types = Car.getTypes();
         for(var type : types){
             System.out.println(type);
         }

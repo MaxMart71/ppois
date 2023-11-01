@@ -3,7 +3,7 @@ public class Regex {
     private static final String reg_for_password = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{4,16}$";
     private static final String reg_for_email = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$";
 
-    private static final String reg_for_car_id = "^[0-9]{4}[A-Z]{2}-[1-7]";
+    private static final String reg_for_car_id = "^[0-9]{4}[A-Z]{2}-[0-7]";
 
     /*
     *Checking if password is strong using regular expressions

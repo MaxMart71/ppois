@@ -11,17 +11,6 @@ public class Car {
 
     Regex r = new Regex();
 
-    private static List<String> types = new ArrayList<String>()
-    {
-        {
-            add("electrocar");
-            add("sportcar");
-            add("sedan");
-            add("hatchback");
-            add("minivan");
-            add("crossover");
-        }
-    };
 
     public Car(String car_id, String car_name, int price, String type){
         this.car_name = car_name;
@@ -73,7 +62,7 @@ public class Car {
     /*
     * A method that return a list of all typer of car
     * @return types list of all car types*/
-    public static List<String> getTypes() {
-        return types;
+    public static CarTypes[] getTypes() {
+        return CarTypes.values();
     }
 }

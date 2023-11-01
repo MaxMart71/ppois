@@ -10,24 +10,24 @@ public class testLoging {
 
     @Test
     public void testLoging() throws NoSuchAlgorithmException{
-        User user = new User("max", "uebg*^Y","fdubi@gamil.com");
+        User user = new User("oil", "uebg*^Y","dubi@gamil.com");
         db.addNewUser(user);
         assertTrue(l.userLogging(user));
         db.deleteUser(user.getPersonId());
     }
     @Test
     public void failedLogging1() throws NoSuchAlgorithmException{
-        User user = new User("max", "uebg*^Y","fdubi@gamil.com");
+        User user = new User("oil", "uebg*^Y","dubi@gamil.com");
         db.addNewUser(user);
-        User user2 = new User("ma", "uebg*^Y","fdubi@gamil.com");
+        User user2 = new User("ma", "uebg*^Y","dubi@gamil.com");
         assertFalse(l.userLogging(user2));
         db.deleteUser(user.getPersonId());
     }
     @Test
     public void failedLogging2() throws NoSuchAlgorithmException{
-        User user = new User("max", "uebg*^Y","fdubi@gamil.com");
+        User user = new User("oil", "uebg*^Y","dubi@gamil.com");
         db.addNewUser(user);
-        User user2 = new User("max", "uebg*^T","fdubi@gamil.com");
+        User user2 = new User("max", "uebg*^T","dubi@gamil.com");
         assertFalse(l.userLogging(user2));
         db.deleteUser(user.getPersonId());
     }
