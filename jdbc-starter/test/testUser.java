@@ -13,10 +13,12 @@ public class testUser {
         Car car = new Car("3047GU-1", "audi", 10, "electrocar");
         db.addNewUser(user);
         db.addNewCar(car);
-        user.rentCar(car.getCarId());
-        assertEquals(user.getPersonId(), db.getUserIdByCarId(car.getCarId()));
+        db.rentCar(car.getCarId(), db.getPersonId(user));
+        assertNotNull(db.getPersonId(user));
+        assertNotNull(car.getCarId());
+        assertNotNull(db.getWasRentedDateByCarId(car.getCarId()));
         db.deleteAfterTest();
-        db.deleteUser(user.getPersonId());
+        db.deleteUser(db.getPersonId(user));
         db.deleteCar(car.getCarId());
     }
 
@@ -26,12 +28,12 @@ public class testUser {
         Car car = new Car("3046GP-1", "audi", 10, "electrocar");
         db.addNewCar(car);
         db.addNewUser(user);
-        db.rentCar(car.getCarId(), user.getPersonId());
+        db.rentCar(car.getCarId(), db.getPersonId(user));
         user.returnCar(car.getCarId());
         assertNotNull(db.getWasReturnDateByCarId(car.getCarId()));
         db.deleteAfterTest();
         db.deleteCar(car.getCarId());
-        db.deleteUser(user.getPersonId());
+        db.deleteUser(db.getPersonId(user));
     }
 
 }

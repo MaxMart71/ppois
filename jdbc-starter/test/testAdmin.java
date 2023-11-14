@@ -32,8 +32,8 @@ public class testAdmin {
     @Test
     public void testDeleteUser(){
         admin.addNewUser(user);
-        assertNotEquals(-1, user.getPersonId());
-        admin.deleteUser(user.getPersonId());
+        assertNotEquals(-1, db.getPersonId(user));
+        admin.deleteUser(db.getPersonId(user));
         int deletedUserId = db.getUserIdByUsername("test1");
         assertEquals(0, deletedUserId);
     }

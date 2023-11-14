@@ -11,8 +11,8 @@ public class User extends Person{
         super(username, password, email);
     }
 
-    public void rentCar(String car_id){
-        db.rentCar(car_id, this.getPersonId());
+    public void rentCar(String car_id, User user){
+        db.rentCar(car_id, db.getPersonId(user));
     }
 
     public void returnCar(String car_id){
@@ -21,7 +21,7 @@ public class User extends Person{
 
     /*
     * Method that shows all types of cars*/
-    public static void getALlTypesOfCars(){
+    public static void printALlTypesOfCars(){
         CarTypes[] types = Car.getTypes();
         for(var type : types){
             System.out.println(type);
@@ -29,7 +29,7 @@ public class User extends Person{
     }
     /*
     * Method that shows all cars, that are available*/
-    public void getAllAvailableCars(){
+    public void printAllAvailableCars(){
         List<String> cars = db.getAvailableCars();
         for (var car : cars){
             System.out.println(car);

@@ -13,7 +13,7 @@ public class testLoging {
         User user = new User("oil", "uebg*^Y","dubi@gamil.com");
         db.addNewUser(user);
         assertTrue(l.userLogging(user));
-        db.deleteUser(user.getPersonId());
+        db.deleteUser(db.getPersonId(user));
     }
     @Test
     public void failedLogging1() throws NoSuchAlgorithmException{
@@ -21,7 +21,7 @@ public class testLoging {
         db.addNewUser(user);
         User user2 = new User("ma", "uebg*^Y","dubi@gamil.com");
         assertFalse(l.userLogging(user2));
-        db.deleteUser(user.getPersonId());
+        db.deleteUser(db.getPersonId(user));
     }
     @Test
     public void failedLogging2() throws NoSuchAlgorithmException{
@@ -29,7 +29,7 @@ public class testLoging {
         db.addNewUser(user);
         User user2 = new User("max", "uebg*^T","dubi@gamil.com");
         assertFalse(l.userLogging(user2));
-        db.deleteUser(user.getPersonId());
+        db.deleteUser(db.getPersonId(user));
     }
 }
 

@@ -2,53 +2,54 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class Registration {
-    private String username = "";
-    private String password = "";
-    private String email = "";
 
-    private final Scanner scanner = new Scanner(System.in);
-    private final DatabaseManager db = new DatabaseManager();
-    private final Regex r = new Regex();
+    private final DatabaseManager databaseManager = new DatabaseManager();
+    private final Regex regEx = new Regex();
     /*
     * User registration using regular expressions*/
     public boolean userRegistration(){
+        String username = "";
+        String password = "";
+        String email = "";
+
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter username:");
         boolean flag = false;
         while(!flag){
             username = scanner.next();
-            if(db.isUsernameTaken(username)){
+            if(databaseManager.isUsernameTaken(username)){
                 System.out.println("This username is already taken, try another one");
             }
             else{flag = true;}
         }
         System.out.println("Enter password:");
-        while (!r.isAvailablePassword(password)){
+        while (!regEx.isAvailablePassword(password)){
             password = scanner.next();
-            if(!r.isAvailablePassword(password)){
+            if(!regEx.isAvailablePassword(password)){
                 System.out.println("This password is not strong");
             }
         }
         System.out.println("Enter email:");
-        while(!r.isAvailableEmail(email)){
+        while(!regEx.isAvailableEmail(email)){
             email = scanner.next();
-            if(!r.isAvailableEmail(email)){
+            if(!regEx.isAvailableEmail(email)){
                 System.out.println("This is incorrect email, try one more time");
             }
         }
 
         User user = new User(username, password, email);
 
-        db.addNewUser(user);
+        databaseManager.addNewUser(user);
         return true;
     }
     public boolean userRegistration(User user){
-        if(db.isUsernameTaken(user.getUsername()) ||
-                !(r.isAvailablePassword(user.getPassword())) ||
-                !(r.isAvailableEmail(user.getEmail()))){
+        if(databaseManager.isUsernameTaken(user.getUsername()) ||
+                !(regEx.isAvailablePassword(user.getPassword())) ||
+                !(regEx.isAvailableEmail(user.getEmail()))){
             return false;
         }
         else{
-            db.addNewUser(user);
+            databaseManager.addNewUser(user);
             return true;
         }
     }

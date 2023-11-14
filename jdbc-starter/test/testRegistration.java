@@ -20,6 +20,6 @@ public class testRegistration {
     public void userCorrectRegistration(){
         User user = new User("alex", "QWe5$td", "good@gmail.com");
         assertTrue(r.userRegistration(user));
-        db.deleteUser(user.getPersonId());
+        db.deleteUser(db.getPersonId(user));
     }
 }

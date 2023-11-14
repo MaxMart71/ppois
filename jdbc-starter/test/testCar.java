@@ -29,10 +29,5 @@ public class testCar {
         car.setPricePerHour(price_per_hour);
         assertEquals(car.getPricePerHour(), price_per_hour);
     }
-    @Test
-    public void testSetUser(){
-        car.setUser(user);
-        assertEquals(car.getUser(), user);
-    }
 
 }

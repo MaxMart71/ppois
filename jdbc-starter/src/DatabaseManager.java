@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class DatabaseManager {
         private final int HOUR_IN_MILLISECONDS = 3600000;
+        private final String AVAILABLE = "available";
+        private final String RENTED = "rented";
     /*
 
     * Adding user into database
@@ -50,7 +52,7 @@ public class DatabaseManager {
             st.setString(2, car.getCarName());
             st.setInt(3, car.getPricePerHour());
             st.setString(4, car.getType());
-            st.setString(5, "available");
+            st.setString(5, AVAILABLE);
 
             st.executeUpdate();
         } catch (SQLException e) {
@@ -172,37 +174,23 @@ public class DatabaseManager {
         }
         return null;
     }
-    public int getUserIdByCarId(String car_id){
-        String query = "SELECT person_id FROM rent WHERE car_id = ?";
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement st = con.prepareStatement(query)) {
-            st.setString(1, car_id);
-
-            try (ResultSet resultSet = st.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("person_id");
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error when retrieving user_id", e);
-        }
-        return 0;
-    }
     public void changeStatusToRented(String car_id){
-        String query = "UPDATE car SET status = 'rented' WHERE id = ?";
+        String query = "UPDATE car SET status = ? WHERE id = ?";
         try(Connection con = ConnectionManager.open();
         PreparedStatement st = con.prepareStatement(query)) {
-            st.setString(1, car_id);
+            st.setString(1, RENTED);
+            st.setString(2, car_id);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     public void changeStatusToAvailable(String car_id){
-        String query = "UPDATE car SET status = 'available' WHERE id = ?";
+        String query = "UPDATE car SET status = ? WHERE id = ?";
         try(Connection con = ConnectionManager.open();
             PreparedStatement st = con.prepareStatement(query)) {
-            st.setString(1, car_id);
+            st.setString(1, AVAILABLE);
+            st.setString(2, car_id);
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -226,15 +214,15 @@ public class DatabaseManager {
     /*Renting car
     * @param car_id , person_id
     * */
-    public void rentCar(String car_id, int person_id){
+    public boolean rentCar(String car_id, int person_id){
         String query_for_rent = "INSERT INTO rent (car_id,person_id, was_rented_date) VALUES (?, ?, NOW())";
         if(isAvailable(car_id)){
             try (Connection con = ConnectionManager.open();
                  PreparedStatement st = con.prepareStatement(query_for_rent)) {
                 st.setString(1, car_id);
                 st.setInt(2, person_id);
-                st.executeUpdate();
                 changeStatusToRented(car_id);
+                return st.executeUpdate()==1;
             } catch (SQLException e) {
                 throw new RuntimeException("Error when adding information in rent table", e);
             }
@@ -242,6 +230,7 @@ public class DatabaseManager {
         else{
             System.out.println("This car is rented now, sorry");
         }
+        return false;
     }
     /*
     * Getting price per hour from database by car_id
@@ -263,38 +252,22 @@ public class DatabaseManager {
         }
         return 0;
     }
-    public String getCarIdByWasRentedDate(Timestamp was_rented_date){
-        String query = "SELECT car_id FROM rent WHERE was_rented_date = ?";
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement st = con.prepareStatement(query)) {
-            st.setTimestamp(1, was_rented_date);
-            try (ResultSet resultSet = st.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getString("car_id");
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error when retrieving car_id", e);
-        }
-        return null;
-    }
-
     public long getWasRentedDateByCarId(String car_id){
+        List<Long> dates = new ArrayList<>();
         String query = "SELECT was_rented_date FROM rent WHERE car_id = ?";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             st.setString(1, car_id);
             try (ResultSet resultSet = st.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getTimestamp("was_rented_date").getTime();
+                while (resultSet.next()) {
+                    dates.add(resultSet.getTimestamp("was_rented_date").getTime());
                 }
             }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error when retrieving was rented date", e);
         }
-        return 0;
+        return dates.get(dates.size()-1);
     }
 
     public double getFinalPrice(String car_id){
@@ -304,26 +277,27 @@ public class DatabaseManager {
     /*
     * Method that removes user form car table*/
     public long getWasReturnDateByCarId(String car_id){
+        List<Long> dates = new ArrayList<>();
         String query = "SELECT was_return_date FROM rent WHERE car_id = ?";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
             st.setString(1, car_id);
             try (ResultSet resultSet = st.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getTimestamp("was_return_date").getTime();
+                while (resultSet.next()) {
+                    dates.add(resultSet.getTimestamp("was_return_date").getTime());
                 }
             }
 
         } catch (SQLException e) {
             throw new RuntimeException("Error when retrieving car_id", e);
         }
-        return 0;
+        return dates.get(dates.size()-1);
     }
     /*
     * Returning the car by the user
     * @param car_id
     * @return NOW() - was_rented_date*/
-    public void returnCar(String car_id){
+    public boolean returnCar(String car_id){
         String query = "UPDATE rent SET was_return_date = NOW() WHERE car_id = ?";
         try (Connection con = ConnectionManager.open();
              PreparedStatement st = con.prepareStatement(query)) {
@@ -331,6 +305,7 @@ public class DatabaseManager {
             st.executeUpdate();
             changeStatusToAvailable(car_id);
             System.out.println("Final price:" + getFinalPrice(car_id));
+            return st.executeUpdate()==1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

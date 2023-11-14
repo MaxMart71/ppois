@@ -21,26 +21,6 @@ public class Person {
     }
     public Person(String username, String password){this(0,username,password, "admin@gmail.com");}
 
-    /*
-    * Method that gets user_id from the database be the email
-    * return id userId*/
-    public int getPersonId() {
-        String query = "SELECT id FROM person WHERE email = ?";
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement st = con.prepareStatement(query)) {
-            st.setString(1,  this.email);
-
-            try (ResultSet resultSet = st.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("id");
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
-    }
-
 
     public int getId() {
         return id;

@@ -7,8 +7,6 @@ public class Car {
     private int price_per_hour;
     private String type;
 
-    private User user;
-
     Regex r = new Regex();
 
 
@@ -51,13 +49,6 @@ public class Car {
         this.type = type;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     /*
     * A method that return a list of all typer of car
