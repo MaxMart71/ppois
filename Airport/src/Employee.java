@@ -1,5 +1,5 @@
 public class Employee extends Person{
-    private final DatabaseManager db = new DatabaseManager();
+    private final EmployeeDatabaseManager employeeDb = new EmployeeDatabaseManager();
     private String workingPosition;
     private int salary;
     Employee(String first_name, String last_name, String passport_id, int salary, String workingPosition){
@@ -9,7 +9,7 @@ public class Employee extends Person{
     }
     @Override
     public int getId(){
-        return db.getEmployeeId(this);
+        return employeeDb.getEmployeeId(this);
     }
     @Override
     public String toString(){

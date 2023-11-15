@@ -1,7 +1,7 @@
 public abstract class Person {
-    private String firstName;
-    private String lastName;
-    private String passportId;
+    private final String firstName;
+    private final String lastName;
+    private final String passportId;
     public Person(String firstName, String lastName, String passportId){
         this.firstName = firstName;
         this.lastName = lastName;

@@ -1,14 +1,12 @@
 public class Passenger extends Person {
-    private int flightId;
-    private final DatabaseManager db = new DatabaseManager();
-    Passenger(String first_name, String last_name, String passport_id , int flightId){
+    private final PassengerDatabaseManager passengerDb = new PassengerDatabaseManager();
+    Passenger(String first_name, String last_name, String passport_id){
         super(first_name, last_name, passport_id);
-        this.flightId = flightId;
     }
 
     @Override
     public int getId() {
-        return db.getPassengerId(this);
+        return passengerDb.getPassengerId(this);
     }
 
     @Override
@@ -16,11 +14,6 @@ public class Passenger extends Person {
         return
                 "first name : " + this.getFirstName() +
                 "last name : " + this.getLastName() +
-                "passport id : " + this.getPassportId() +
-                "flight id : " + this.getFlightId();
-    }
-
-    public int getFlightId() {
-        return flightId;
+                "passport id : " + this.getPassportId();
     }
 }

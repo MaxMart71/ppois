@@ -2,11 +2,13 @@ public class Plane {
     private String model;
     private int airlinesId;
 
-    private int amountOfAvailablePlaces;
-    public Plane(String model, int airlinesId, int amountOfAvailablePlaces){
+    private int amountOfPlaces;
+    private String planeNumber;
+    public Plane(String model, int airlinesId, int amountOfPlaces, String planeNumber){
         this.model = model;
         this.airlinesId = airlinesId;
-        this.amountOfAvailablePlaces = amountOfAvailablePlaces;
+        this.amountOfPlaces = amountOfPlaces;
+        this.planeNumber = planeNumber;
     }
 
     public String getModel() {
@@ -20,7 +22,10 @@ public class Plane {
 
 
     public int getAmountOfPlaces() {
-        return amountOfAvailablePlaces;
+        return amountOfPlaces;
     }
 
+    public String getPlaneNumber() {
+        return planeNumber;
+    }
 }
