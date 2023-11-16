@@ -5,7 +5,7 @@ out/
 .idea/
 *.iml
 *.iws
-recources/
+resources/
 
 ### Eclipse ###
 .apt_generated
