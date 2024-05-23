@@ -1,0 +1,35 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="features">
+    <h2>Добавить солдата</h2>
+    {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <form method="post" class="soldier-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="first_name">First name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+        </div>
+        <div class="form-group">
+                <label for="is_fit">Health Status:</label>
+                <select id="is_fit" name="is_fit" required>
+                    <option value="healthy">Healthy</option>
+                    <option value="unhealthy">Unhealthy</option>
+                </select>
+            </div>
+        <button class="btn btn-success" type="submit">Добавить</button>
+    </form>
+</div>
+{% endblock %}

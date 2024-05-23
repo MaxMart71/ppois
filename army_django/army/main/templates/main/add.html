@@ -1,0 +1,58 @@
+{% extends 'main/layout.html' %}
+
+
+{% block title %}
+Страница для добавления записей
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Подключение Font Awesome для иконок -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+<style>
+    .section a {
+	color: white;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+    .navigation-container {
+        text-align: center;
+    }
+
+    .btn  {
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        position: relative;
+        border: 1px solid white;
+        padding: 0 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="navigation-container">
+    <div class="btn-group-vertical">
+        <a href="{% url 'add_soldier' %}" class="btn btn-primary mb-2">
+            <i class="fas fa-paper-plane"></i> Добавление солдата
+        </a>
+        <a href="{% url 'add_technique' %}" class="btn btn-primary mb-2">
+            <i class="fas fa-paper-plane"></i> Добавление военной техники
+        </a>
+        <a href="{% url 'add_base' %}" class="btn btn-primary mb-2">
+            <i class="fas fa-paper-plane"></i> Добавление военной базы
+        </a>
+        <a href="{% url 'add_operation' %}" class="btn btn-primary mb-2">
+            <i class="fas fa-paper-plane"></i> Добавление военной операции
+        </a>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="features">
+    <h2>Удалить военную операцию</h2>
+    {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <form method="post" class="operation-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <select id="type" name="type" onchange="showModels()">
+                <option value="" disabled selected>Select a type</option>
+                <option value="attack">Attack</option>
+                <option value="defend">Defend</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="model-group" style="display: none;">
+            <label for="model">Direction:</label>
+            <select id="model" name="model" required>
+                <option value="" disabled selected>Select a type first</option>
+            </select>
+        </div>
+
+        <script>
+
+            const models = {
+                attack: ["south", "south-east", "east", "north-east", "north","north-west","west","south-west"],
+                defend: ["fortify", "hold", "reinforce", "withdraw", "fallback"],
+            };
+
+
+            function showModels() {
+                const typeSelect = document.getElementById("type");
+                const modelSelect = document.getElementById("model");
+                const selectedType = typeSelect.value;
+
+
+                modelSelect.innerHTML = '<option value="" disabled selected>Select a model</option>';
+
+                models[selectedType].forEach(model => {
+                    const option = document.createElement("option");
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+
+
+                document.getElementById("model-group").style.display = "block";
+            }
+        </script>
+
+        <button class="btn btn-success" type="submit">Удалить</button>
+    </form>
+</div>
+{% endblock %}

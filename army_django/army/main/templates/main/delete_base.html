@@ -1,0 +1,30 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="features">
+    <h2>Удалить военную базу</h2>
+    {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <form method="post" class="base-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="place">Place:</label>
+            <input type="text" id="place" name="place" required>
+        </div>
+         <div class="form-group">
+                <label for="type">Type:</label>
+                <select id="type" name="type" required>
+                    <option value="combat_bases">Combat Bases</option>
+                    <option value="air_bases">Air Bases</option>
+                    <option value="naval_bases">Naval Bases</option>
+                    <option value="missile_bases">Missile Bases</option>
+                    <option value="infrastructure_bases">Infrastructure Bases</option>
+                </select>
+        </div>
+        <button class="btn btn-success" type="submit">Удалить</button>
+    </form>
+</div>
+{% endblock %}

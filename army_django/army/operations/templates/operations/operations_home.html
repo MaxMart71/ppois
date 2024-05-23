@@ -1,0 +1,16 @@
+{% extends 'main/layout.html' %}
+
+
+{% block title %}Доступные операции{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Доступные операции</h1>
+        <p>Это веб приложение создано для управления и изменения армии</p>
+        <button class="btn btn-warning">На страницу про армию</button>
+
+        {% for el in values %}
+            <p>{{ el }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

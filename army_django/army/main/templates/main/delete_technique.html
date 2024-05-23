@@ -1,0 +1,72 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="features">
+    <h2>Удалить военную технику</h2>
+    {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <form method="post" class="technique-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <select id="type" name="type" onchange="showModels()">
+                <option value="" disabled selected>Select a type</option>
+                <option value="tanks">Tanks</option>
+                <option value="apcs">APCs</option>
+                <option value="attack_helicopters">Attack Helicopters</option>
+                <option value="fighters_and_bombers">Fighters and Bombers</option>
+                <option value="artillery">Artillery</option>
+                <option value="missile_systems">Missile Systems</option>
+                <option value="submarines">Submarines</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="model-group" style="display: none;">
+            <label for="model">Model:</label>
+            <select id="model" name="model" required>
+                <option value="" disabled selected>Select a type first</option>
+            </select>
+        </div>
+
+        <script>
+            // Объект, содержащий модели для каждого типа техники
+            const models = {
+                tanks: ["M1 Abrams", "Leopard 2", "T-90", "Challenger 2", "Type 99"],
+                apcs: ["M2 Bradley", "BTR-80", "Boxer", "Patria AMV", "BMP-2"],
+                attack_helicopters: ["AH-64 Apache", "Mi-24 Hind", "Eurocopter Tiger", "Ka-52 Alligator", "AH-1Z Viper"],
+                fighters_and_bombers: ["F-22 Raptor", "F-35 Lightning II", "Su-35", "Eurofighter Typhoon", "J-20"],
+                artillery: ["M777 Howitzer", "Panzerhaubitze 2000", "2S19 Msta", "Archer Artillery System", "PLZ-05"],
+                missile_systems: ["Patriot Missile System", "S-400 Triumf", "THAAD", "Buk Missile System", "Iskander-M"],
+                submarines: ["Virginia-class", "Type 093", "Borei-class", "Astute-class", "Project 955"]
+            };
+
+            // Функция для отображения моделей в зависимости от выбранного типа техники
+            function showModels() {
+                const typeSelect = document.getElementById("type");
+                const modelSelect = document.getElementById("model");
+                const selectedType = typeSelect.value;
+
+                // Очищаем предыдущие варианты моделей
+                modelSelect.innerHTML = '<option value="" disabled selected>Select a model</option>';
+
+                // Добавляем варианты моделей для выбранного типа техники
+                models[selectedType].forEach(model => {
+                    const option = document.createElement("option");
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+
+                // Отображаем поле выбора модели
+                document.getElementById("model-group").style.display = "block";
+            }
+        </script>
+
+
+        <button class="btn btn-success" type="submit">Удалить</button>
+    </form>
+</div>
+{% endblock %}

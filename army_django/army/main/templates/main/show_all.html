@@ -1,0 +1,111 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="features">
+    <h2>Добавить военную базу</h2>
+    {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    <form action="/show_all/" method="post" class="base-form">
+        {% csrf_token %}
+         <div class="form-group">
+                <label for="type">Получить:</label>
+                <select id="type" name="type" required>
+                    <option value="soldiers">soldiers</option>
+                    <option value="operations">operations</option>
+                    <option value="technique">technique</option>
+                    <option value="base">base</option>
+                </select>
+        </div>
+
+        <button class="btn btn-success" type="submit">Получить</button>
+    </form>
+
+    {% if type == 'soldiers' %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Healthy</th>
+            <th>Age</th>
+            <th>Rank</th>
+            <th>Learning</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for inf in info %}
+        <tr>
+            <td>{{ inf.1 }}</td>
+            <td>{{ inf.2 }}</td>
+            <td>{{ inf.3 }}</td>
+            <td>{{ inf.4 }}</td>
+            <td>{{ inf.5 }}</td>
+            <td>{{ inf.6 }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% elif type == 'operations' %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Direction</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for inf in info %}
+        <tr>
+            <td>{{ inf.1 }}</td>
+            <td>{{ inf.2 }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% elif type == 'technique' %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for inf in info %}
+        <tr>
+            <td>{{ inf.1 }}</td>
+            <td>{{ inf.2 }}</td>
+            <td>{{ inf.3 }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% elif type == 'base' %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Place</th>
+            <th>Type</th>
+            <th>Amount of soldiers</th>
+            <th>Amount of technique</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for inf in info %}
+        <tr>
+            <td>{{ inf.1 }}</td>
+            <td>{{ inf.2 }}</td>
+            <td>{{ inf.3 }}</td>
+            <td>{{ inf.4 }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>
+{% endblock %}
