@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Plants</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            width: 100%;
+            background-color: #dedede;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .table-container {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background-color: #f0f0f0;
+        }
+        th {
+            text-align: left;
+            padding: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #e6f4ea;
+        }
+        td {
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        .status {
+            display: flex;
+            align-items: center;
+        }
+        .status span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-success span {
+            background-color: #28a745;
+        }
+        .status-warning span {
+            background-color: #ffc107;
+        }
+        .status-danger span {
+            background-color: #dc3545;
+        }
+        .delete-icon {
+            color: #dc3545;
+            cursor: pointer;
+        }
+        .add-plant-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .add-plant-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #e6f4ea;
+            color: #28a745;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .add-plant-button:hover {
+            background-color: #d4ecd9;
+        }
+        .add-plant-button span {
+            margin-left: 10px;
+        }
+        .arrow {
+            margin-top: 30px;
+            font-size: 30px;
+            color: #707070;
+        }
+    </style>
+</head>
+<body>
+<div class="header">My plants</div>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Header</th>
+            <th>Header</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Text</td>
+            <td class="status status-success"><span></span>Success</td>
+            <td class="delete-icon">🗑️</td>
+        </tr>
+        <tr>
+            <td>Text</td>
+            <td class="status status-warning"><span></span>Warning</td>
+            <td class="delete-icon">🗑️</td>
+        </tr>
+        <tr>
+            <td>Text</td>
+            <td class="status status-danger"><span></span>Danger</td>
+            <td class="delete-icon">🗑️</td>
+        </tr>
+        <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+</div>
+<div class="add-plant-container">
+    <a href="#" class="add-plant-button">
+        <strong>+</strong>
+        <span>Add new plant</span>
+    </a>
+</div>
+<div class="footer">
+    <a href="2.html" class="arrow-link">
+        <div class="arrow">➡</div>
+    </a>
+</div>
+</body>
+</html>

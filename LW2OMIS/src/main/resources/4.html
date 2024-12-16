@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f7f7f7;
+        }
+        .header {
+            background-color: #eaeaea;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .chart-container {
+            width: 25%; /* Уменьшено для визуализации */
+        }
+        .form-container {
+            margin-left: 30px; /* Уменьшено для улучшения выравнивания */
+        }
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .form-container label {
+            font-size: 12px; /* Уменьшен размер шрифта */
+            margin-bottom: 5px;
+        }
+        .form-container input {
+            padding: 6px; /* Уменьшено значение padding */
+            font-size: 12px; /* Уменьшение размера шрифта */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100px;
+        }
+        .form-container button {
+            padding: 8px; /* Уменьшено значение padding */
+            font-size: 12px; /* Уменьшение размера шрифта */
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #555;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        .footer img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    Land Diagram
+</div>
+<div class="container">
+    <div class="chart-container">
+        <canvas id="landChart"></canvas>
+    </div>
+    <div class="form-container">
+        <form id="dataForm">
+            <label for="value1">Label 1</label>
+            <input type="text" id="value1" placeholder="Value">
+            <label for="value2">Label 2</label>
+            <input type="text" id="value2" placeholder="Value">
+            <label for="value3">Label 3</label>
+            <input type="text" id="value3" placeholder="Value">
+            <label for="value4">Label 4</label>
+            <input type="text" id="value4" placeholder="Value">
+            <button type="button" onclick="updateChart()">Submit</button>
+        </form>
+    </div>
+</div>
+<div class="footer">
+    <a href="2.html" class="arrow-link">
+        <div class="arrow">➡</div>
+    </a>
+</div>
+<script>
+    // Включение плагина datalabels для Chart.js
+    Chart.register(ChartDataLabels);
+
+    const ctx = document.getElementById('landChart').getContext('2d');
+    const landChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
+            datasets: [{
+                data: [12.3, 14.6, 24.3, 48.8],
+                backgroundColor: ['#a29bfe', '#74b9ff', '#55efc4', '#81ecec'],
+                borderWidth: 0,
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '60%', // Увеличиваем ширину кольца в 3 раза
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                datalabels: {
+                    display: true,
+                    color: '#000',
+                    font: {
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    formatter: function(value, context) {
+                        return value.toFixed(1) + '%'; // Форматирование меток как процентов
+                    },
+                    anchor: 'center', // Размещение меток внутри сектора
+                    align: 'center', // Выравнивание текста в центре сектора
+                },
+                // Добавим текст в центре диаграммы
+                tooltip: {
+                    enabled: false, // Отключаем тултип
+                }
+            }
+        },
+        plugins: [{
+            id: 'centerText', // Идентификатор плагина
+            beforeDraw: (chart) => {
+                const { width } = chart;
+                const { height } = chart;
+                const ctx = chart.ctx;
+
+                ctx.restore();
+                const fontSize = (height / 100).toFixed(2);
+                ctx.font = `${fontSize}em sans-serif`;
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#000';
+
+                const text1 = 'Leg';
+                const text2 = 'end';
+                const textX = Math.round((width - ctx.measureText(text1).width) / 2);
+                const textY1 = height / 2 - fontSize * 10; // Верхний текст
+                const textY2 = height / 2 + fontSize * 10; // Нижний текст
+
+                ctx.fillText(text1, textX, textY1);
+                ctx.fillText(text2, textX, textY2);
+                ctx.save();
+            }
+        }]
+    });
+
+    function updateChart() {
+        const value1 = parseFloat(document.getElementById('value1').value) || 0;
+        const value2 = parseFloat(document.getElementById('value2').value) || 0;
+        const value3 = parseFloat(document.getElementById('value3').value) || 0;
+        const value4 = parseFloat(document.getElementById('value4').value) || 0;
+
+        landChart.data.datasets[0].data = [value1, value2, value3, value4];
+        landChart.update();
+    }
+</script>
+</body>
+</html>

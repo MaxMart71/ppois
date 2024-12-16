@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Plant Questionnaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 100%;
+            background-color: #dedede;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 20px;
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        /* Image Upload Section */
+        .image-upload {
+            grid-column: 1 / 2;
+            grid-row: 1 / 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f8f8;
+        }
+
+        .image-upload img {
+            width: 80px;
+            height: 80px;
+            opacity: 0.5;
+        }
+
+        .image-upload span {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #777;
+        }
+
+        /* Input Fields Section */
+        .inputs-group {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Date Picker Section */
+        .date-picker {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            background-color: #e6f4ea;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .date-picker label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Slider Section */
+        .slider-container {
+            grid-column: 3 / 4;
+            grid-row: 1 / 2;
+        }
+
+        .slider-container label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .slider-container input {
+            width: 100%;
+        }
+
+        /* Extra Inputs Section */
+        .extra-inputs {
+            grid-column: 3 / 4;
+            grid-row: 2 / 3;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: -50px; /* Поднимаем поля вверх */
+        }
+
+        /* Submit Button */
+        .submit-button {
+            grid-column: 3 / 4;
+            grid-row: 3 / 4;
+            justify-self: start;
+        }
+
+        .submit-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-button button:hover {
+            background-color: #555;
+        }
+
+        .arrow {
+            margin-top: 20px;
+            font-size: 30px;
+            color: #707070;
+        }
+    </style>
+</head>
+<body>
+<div class="header">New plant questionnaire</div>
+<div class="container">
+    <!-- Image Upload Section -->
+    <div class="image-upload">
+        <img src="https://via.placeholder.com/80" alt="Upload Icon">
+        <span>+</span>
+        <span>Upload Photo</span>
+    </div>
+
+    <!-- Input Fields Section -->
+    <div class="inputs-group">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Value">
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select id="type">
+                <option value="value">Value</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Date Picker Section -->
+    <div class="date-picker">
+        <label for="date">Select date</label>
+        <input type="date" id="date">
+    </div>
+
+    <!-- Slider Section -->
+    <div class="slider-container">
+        <label for="sunlight-hours">☀️ Кол-во солнечных часов</label>
+        <input type="range" id="sunlight-hours" min="0" max="10">
+    </div>
+
+    <!-- Extra Input Fields -->
+    <div class="extra-inputs">
+        <div class="form-group">
+            <label for="extra1">Label</label>
+            <input type="text" id="extra1" placeholder="Value">
+        </div>
+        <div class="form-group">
+            <label for="extra2">Label</label>
+            <input type="text" id="extra2" placeholder="Value">
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="submit-button">
+        <button type="submit">Submit</button>
+    </div>
+</div>
+<div class="footer">
+    <a href="2.html" class="arrow-link">
+        <div class="arrow">➡</div>
+    </a>
+</div>
+</body>
+</html>

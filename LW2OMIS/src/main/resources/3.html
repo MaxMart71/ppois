@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatment Handbook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .header {
+            background-color: #eaeaea;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            margin: 20px;
+        }
+        .sidebar {
+            width: 20%;
+            background-color: #ffffff;
+            padding: 15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .categories {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .categories input {
+            margin-right: 5px;
+        }
+        .content {
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 15px;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .card img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            background-color: #f0f0f0;
+        }
+        .card p {
+            font-size: 14px;
+            margin: 0;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .footer img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    Treatment handbook
+</div>
+<div class="container">
+    <div class="sidebar">
+        <div class="categories">
+            <strong>Categories</strong>
+            <div>
+                <input type="checkbox" id="cat1" checked>
+                <label for="cat1">Label<br>Description</label>
+            </div>
+            <div>
+                <input type="checkbox" id="cat2" checked>
+                <label for="cat2">Label<br>Description</label>
+            </div>
+            <div>
+                <input type="checkbox" id="cat3" checked>
+                <label for="cat3">Label<br>Description</label>
+            </div>
+        </div>
+        <div class="categories">
+            <strong>Category</strong>
+            <div>
+                <input type="checkbox" id="cat4" checked>
+                <label for="cat4">Label</label>
+            </div>
+            <div>
+                <input type="checkbox" id="cat5" checked>
+                <label for="cat5">Label</label>
+            </div>
+            <div>
+                <input type="checkbox" id="cat6" checked>
+                <label for="cat6">Label</label>
+            </div>
+        </div>
+        <div class="categories">
+            <strong>Category</strong>
+            <div>
+                <input type="checkbox" id="cat7" checked>
+                <label for="cat7">Label</label>
+            </div>
+            <div>
+                <input type="checkbox" id="cat8" checked>
+                <label for="cat8">Label</label>
+            </div>
+            <div>
+                <input type="checkbox" id="cat9" checked>
+                <label for="cat9">Label</label>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+        <div class="card">
+            <img src="placeholder.png" alt="Placeholder image">
+            <p>Text</p>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <a href="2.html" class="arrow-link">
+        <div class="arrow">➡</div>
+    </a>
+</div>
+</body>
+</html>
